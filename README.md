@@ -3,7 +3,7 @@
 
 ## Goals
 - Implement and test a virtual computer network
-- 
+- Perform DHCP, Subnetting, Routing, Switching labworks
 
 ##  Virtualization tool
 The setup of the machines and networks for this lab has is VMWare
@@ -58,6 +58,7 @@ DELL 330 #2: 10.10.10.52
 
 Why:
 ESXi is the bare-metal hypervisor that manages virtual machines. Each host needs a unique IP for management (vCenter or direct web UI).
+![putty](https://github.com/user-attachments/assets/6f79eb99-751d-451c-97bf-acc36940af0a)
 
 ### 3. Configure Network Components (vSwitch, VLAN)
 Objective:
@@ -88,7 +89,7 @@ vmnic1 (port 2) connects to Cisco WS2960G for iSCSI traffic.
 
 Why:
 Segmenting traffic via VLANs improves security and performance. Management, guest VM traffic, and storage (iSCSI) are isolated from each other.
-
+![vlan](https://github.com/user-attachments/assets/599edc26-617c-4d43-b13c-03db1bd018e7)
 ### 4. Create Volumes on NAS (HANOI)
 Objective:
 Create shared storage volumes on the NAS to be used by ESXi hosts over iSCSI.
@@ -106,6 +107,7 @@ LUN can be sized based on need (e.g., 500GB)
 
 Why:
 Shared iSCSI storage allows both ESXi hosts to access the same datastore, enabling VMotion, HA, and shared storage configurations.
+![volume](https://github.com/user-attachments/assets/1546700c-4255-44a8-b4e3-a29f01bb647f)
 
 ### 5. ESXi Hosts Enable iSCSI and Add the Targets
 Objective:
@@ -144,6 +146,7 @@ Repeat or share the datastore with both hosts.
 
 Why:
 Datastores are where VMs are stored. Sharing datastores between hosts allows for better flexibility and redundancy.
+![Virtual](https://github.com/user-attachments/assets/5cd10e1b-0bce-44ad-9e81-5d88d987a590)
 
 ### 7. Install Guest OS (Virtual Machines)
 Objective:
@@ -164,13 +167,17 @@ Power on and install OS.
 
 Why:
 Deploying VMs is the main use of virtualization. Assigning VLANs ensures proper network segmentation.
+![customer](https://github.com/user-attachments/assets/8907d310-4477-4644-9ab2-134d5737b682)
+## Network Summary
 
-Network Summary Based on Diagram
-Component	IP Address	Role
-NAS HANOI	10.10.10.1	iSCSI Storage Target
-DELL330-1 (vmk0)	10.10.10.51	ESXi Management
-DELL330-2 (vmk0)	10.10.10.52	ESXi Management
-DELL330-1 (vmk1)	10.10.100.1	iSCSI VMkernel (VLAN 100)
-DELL330-2 (vmk1)	10.10.100.2	iSCSI VMkernel (VLAN 100)
-Cisco 2960	10.10.10.2	Switch (Trunk for ESXi/Uplinks)
-Cisco Router	10.10.10.1/24	Gateway
+| Component            | IP Address                         |Role                             |
+| ----------------- | -------------------------------- |--------------------------------|
+| NAS HANOI	 | 10.10.10.1	|iSCSI Storage Target|
+| DELL330-1 (vmk0)	 | 10.10.10.51 |ESXi Management
+| DELL330-2 (vmk0)	 |10.10.10.52	  |ESXi Management
+| DELL330-1 (vmk1)	 | 10.10.100.1	 |iSCSI VMkernel (VLAN 100)
+| DELL330-2 (vmk1) |10.10.100.2  |iSCSI VMkernel (VLAN 100)
+| Cisco 2960	| 10.10.10.2 |Switch (Trunk for ESXi/Uplinks)
+| Cisco Router | 10.10.10.1/24	 |Gateway
+
+
